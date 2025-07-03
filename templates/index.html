@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Currency Converter</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .container {
+            background: white;
+            padding: 30px 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            margin: auto;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        input, select, button {
+            width: 100%;
+            padding: 12px 10px;
+            margin-top: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: linear-gradient(135deg, #5f72be, #9b59b6);
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+        .error {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #333;
+            background-color: #f9f9f9;
+            margin-top: auto;
+        }
+        footer a {
+            color: #333;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>💱 Currency Converter</h2>
+        <form method="POST">
+            <input type="text" name="amount" placeholder="Enter amount" required>
+
+            <select name="from_currency">
+                {% for curr in currencies %}
+                <option value="{{ curr }}">
+                    {% if curr == 'CNY' %}YUAN (CNY)
+                    {% elif curr == 'JPY' %}YEN (JPY)
+                    {% elif curr == 'KRW' %}WON (KRW)
+                    {% elif curr == 'AED' %}DIRHAM (AED)
+                    {% elif curr == 'GBP' %}POUND (GBP)
+                    {% else %}{{ curr }}{% endif %}
+                </option>
+                {% endfor %}
+            </select>
+
+            <select name="to_currency">
+                {% for curr in currencies %}
+                <option value="{{ curr }}">
+                    {% if curr == 'CNY' %}YUAN (CNY)
+                    {% elif curr == 'JPY' %}YEN (JPY)
+                    {% elif curr == 'KRW' %}WON (KRW)
+                    {% elif curr == 'AED' %}DIRHAM (AED)
+                    {% elif curr == 'GBP' %}POUND (GBP)
+                    {% else %}{{ curr }}{% endif %}
+                </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Convert</button>
+        </form>
+
+        {% if result is not none %}
+        <div class="result">Converted Amount: {{ result | round(2) }}</div>
+        {% elif error %}
+        <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    <footer>
+        &copy; 2025 ARI R — Licensed under <a href="LICENSE" target="_blank">MIT License</a>
+    </footer>
+</body>
+</html>
